@@ -48,7 +48,7 @@ $$ \begin{align}
 
 ## Thermal Conductivity $K_g$
 
-```kg_x = calc_kg_x_WA(Yi_x,T_x, mug_x)```$\in \mathbf{R}^{101\times 1}$
+```kg_x = calc_kg_x_WA(Yi_x,T_x, mug_x)```
 
 
 $$ \begin{align}
