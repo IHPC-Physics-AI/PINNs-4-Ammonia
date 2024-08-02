@@ -2,6 +2,10 @@
 
 This set of code contains the Python functions to perform transient simulation of the ammonia cracking process in a 1D reactor. Different operation and reactor parameters can be set.
 
+The code for data generation can be found in ```data_generation.ipynb```. The code involves defining an initial condition ```Y0``` for the values (4 reactants (Y) + temperature (T) at 51 sample points) and a function for the rate of change ```dC_dt(t,Y, reac, oper)```, which is then passed into ```solve_ivp(dC_dt,[0, tvals[-1]],Y0,args=(reac, oper), t_eval=tvals, method='LSODA')``` to solve for the values at different times.
+
+A function to compute the reaction term of the equation is found in ```reaction_function.py```. The function to compute $C_{pg}$ is found in ```Cp_mixture.py```.
+
 # Transient Simulation
 
 The overall equation is given by the convection-diffusion of the chemicals and temperature.
