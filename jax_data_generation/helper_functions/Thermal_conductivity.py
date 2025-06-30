@@ -3,6 +3,8 @@ import jax.numpy as jnp
 
 from Reac_class import *
 
+jax.config.update("jax_enable_x64", True)
+
 def calc_kg_x_WA(Y, T, reac):
   """
   Y (array): Composition at each x-location
