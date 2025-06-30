@@ -8,3 +8,5 @@ def Molecular_weight_i():
         39.9480E-3]     # Ar
 
   return jnp.asarray(Wi)
+
+jax.jit(Molecular_weight_i)
