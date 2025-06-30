@@ -38,7 +38,7 @@ class Reac:
     self.stoi_vij = jnp.array([-2.0,3.0,1.0,0.0]) # 2NH3 -> 3H2 + 1N2 (Ar Catalyst)
 
     # Heat Released
-    self.DHr = - 45600.0
+    self.DHr = 45600.0
 
     # Species Properties (Polar / Non-polar)
     self.fs = [0.733, 1.0, 1.0, 1.0]
