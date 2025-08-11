@@ -1,0 +1,24 @@
+# Physics Informed Neural Networks (PINNs) for the Ammonia Cracking Reaction
+
+## Introduction
+
+This set of code contains ```PINNs``` that solve for  ```Temperature``` and / or ```NH3 Concentration``` at steady state. The remaining species concentrations can be determined using stoichiometry. 
+
+As mentioned in the ```data_generation``` folder, the overall equation is given by the convection-diffusion of the chemicals and temperature.
+``` math
+\frac{\partial Y_i}{\partial t}=D_a \frac{\partial^2 Y_i}{\partial x^2} - \frac{u_g}{A_c} \frac{\partial Y_i}{\partial x} + R_i(Y,T,x) 
+```
+``` math
+\frac{\partial T}{\partial t}=\frac{\lambda}{C_{pg}(Y,T)} \frac{\partial^2 T}{\partial x^2} - \frac{u_g}{A_c} \frac{\partial T}{\partial x} + R_T(Y,T,x) 
+```
+
+The initial and boundary conditions follow those in the ```jax_data_generation``` folder and can be found there.
+
+## Organisation of Folder
+
+This folder can be further divided into three segments:
+- Single Variable PINNs (PINNs that solve exclusively for ```Temperature``` or ```NH3 Concentration``` only)
+- Multi Variable PINNs (PINNs that solve for both ```Temperature``` and ```NH3 Concentration```)
+- Data of Species Concentrations and Tempertures at steady state (Obtained from code in ```data_generation```)
+
+The remainder of this ```README.md``` will be dedicated to an overview of the ```PINNs``` and key concepts crucial to their function, as well as a brief description of the dataset used and its creation.
