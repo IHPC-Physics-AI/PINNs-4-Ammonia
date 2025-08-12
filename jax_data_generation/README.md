@@ -24,7 +24,7 @@ $$
 Y_1(x=0)=0.99, Y_2(x=0)=0.005, Y_3(x=0)=0.005, T(x=0)=771.5K \left(\text{arbitrary number chosen}\right)
 $$
 
-## Import Differences
+## Key Differences
 One of the most important differences between these scripts and the original ones in ```data_generation``` is that the sign of enthalpy change was flipped. This changes the reaction from exothermic to endothermic and corrects the error in the original script.
 
 With that being said, the error is not noticeable in the original scripts as the extremely low BC of $$T_{amb}$$ restricts sufficient magnification to notice the flawed shape of the temperature plot.

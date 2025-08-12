@@ -22,7 +22,7 @@ class Reac:
     self.eta = 0.99 # Catalyst Effectiveness Factor
 
     # Discretizing x-axis
-    self.Nx = 201 # Number of Discrete points along reactor
+    self.Nx = 1001 # Number of Discrete points along reactor
     self.dx = self.L /(self.Nx-1) # Size of an element (m)
     self.xvals = jnp.linspace(0,self.L,self.Nx) # Positions of Discrete Locations (m)
 
