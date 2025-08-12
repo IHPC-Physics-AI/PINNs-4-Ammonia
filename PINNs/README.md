@@ -19,17 +19,27 @@ The initial and boundary conditions follow those in the ```jax_data_generation``
 This folder can be further divided into three segments:
 - Single Variable PINNs (PINNs that solve exclusively for Temperature or NH3 Concentration only)
 - Multi Variable PINNs (PINNs that solve for both Temperature and NH3 Concentration)
-- Data of Species Concentrations and Tempertures at steady state (Obtained from code in ```data_generation```)
+- Data of Species Concentrations and Tempertures at steady state (Obtained from code in ```jax_data_generation```)
 
 The remainder of this ```README.md``` will be dedicated to an overview of the PINNs and key concepts crucial to their function, as well as a brief description of the dataset used and its creation.
 
 ## Network Architecture
 
-The x-coordinates are taken as inputs and fed into 3-4 hidden layers. The nodes of the final hidden layer is then utilised in the formation of the pseudoinverse $Ax = b$. To summarise, the time-derivatives in the governring PDEs are set to 0, and the reaction terms (independent of the variables) are brought over to the RHS of the equation.
+The x-coordinates are taken as inputs and fed into 3-4 hidden layers. The nodes of the final hidden layer is then utilised in the formation of the pseudoinverse $Ax = b$. To summarise, the pseudoinverse in constructed based on the governing PDEs. The vector $x$ obtained from the pseudoinverse corresponds to weights applied to the nodes of the final hidden layer in order to derive the variables in question — Temperature and / or NH3 Concentration.
 
-The dependent variable can be obtained by $Y = \sum w_i f_i$ (where $f_i$ is the value of the $i^{th}$ node and $w_i$ is the associated weight obtained from the psuedoinverse), and its derivatives can be obtained by $\frac{dY}{dx} = \sum w_i \frac{df}{dx}$ and $\frac{d^2Y}{dx^2} = \sum w_i \frac{d^2f}{dx^2}$ (where $\frac{df}{dx}$ and $\frac{d^2f}{dx^2}$ can be obtained with auto-differentiation).
+The time-derivatives in the governring PDEs are set to 0, and the reaction terms (independent of the variables) are brought over to the RHS of the equation.
 
-The coefficients of the PDEs can be obtained either through 
+The dependent variables — Temperature and NH3 Concentration — can be obtained by $Y = \sum w_i f_i$ (where $f_i$ is the value of the $i^{th}$ node and $w_i$ is the associated weight obtained from the psuedoinverse), and its derivatives can be obtained by $\frac{dY}{dx} = \sum w_i \frac{df}{dx}$ and $\frac{d^2Y}{dx^2} = \sum w_i \frac{d^2f}{dx^2}$ (where $\frac{df}{dx}$ and $\frac{d^2f}{dx^2}$ can be obtained with auto-differentiation).
+
+The coefficients of the PDEs are obtained using the ```gen_coeffs``` function found in ```jax_data_generation```. Two main methods were used to derive the coefficients:
+- A substitution of the ground truth values obtained from the solver into the ```gen_coeffs``` function
+- An iterative approach in which initial guess values are substituted into the solver and updated based on the weights derived from the pseudoinverse
+
+The coefficients, dependent variables and their derivatives will be then arranged according to the governing PDEs to form the pseudoinverse matrix $A$. Each column of $A$ corresponds to a different node, while each row of $A$ corresponds to a different x-coordinate. The reaction terms form the vector $b$, with each row also corresponding to a different x-coordinate. The pseudoinverse is then solved for the vector $x$, which corresponds to the previously mentioned weights vector $w$.
+
+Using the equation described above, the values of Temperature and NH3 Concentration can also be derived. These will be compared to the ground truth values to determine the data loss. The difference between the LHS and RHS of the pseudoinverse will be used to determine the PDE loss.
+
+
 
 ## Dataset
 
